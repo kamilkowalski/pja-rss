@@ -1,0 +1,13 @@
+.row
+  .col-sm-12
+    %h1 PJA RSS
+
+    %p Siema! Jeżeli szukasz feedów RSS i JSON dla aktualności PJA to linki są następujące:
+
+    .form-group
+      %label{ for: "rss" } RSS:
+      %input{ type: "text", id: "rss", name: "rss", value: ENV["APP_HOST"] + "/?format=rss", class: "form-control" }
+
+    .form-group
+      %label{ for: "json" } JSON:
+      %input{ type: "text", id: "json", name: "json", value: ENV["APP_HOST"] + "/?format=json", class: "form-control" }
