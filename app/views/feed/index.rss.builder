@@ -4,7 +4,7 @@ xml.rss :version => "2.0" do
     xml.title "Aktualności PJA"
     xml.author "Polsko-Japońska Akademia Technik Komputerowych"
     xml.description "Aktualności z PJA"
-    xml.link ENV["APP_HOST"] + "/feed.rss"
+    xml.link ENV["APP_HOST"] + "/?format=rss"
     xml.language "pl"
 
     @articles.each do |article|
