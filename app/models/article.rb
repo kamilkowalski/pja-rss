@@ -1,3 +1,3 @@
 class Article < ActiveRecord::Base
-  validates_presence_of :title, :url, :content
+  validates_presence_of :title, :url
 end
