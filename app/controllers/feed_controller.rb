@@ -5,6 +5,7 @@ class FeedController < ApplicationController
     respond_to do |format|
       format.html
       format.rss { render layout: false }
+      format.json { render layout: false }
     end
   end
 end
