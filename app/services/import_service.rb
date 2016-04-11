@@ -23,22 +23,24 @@ class ImportService
   end
 
   def read_document
-    @document.css(".introText > p").each do |article|
-      parse_article(article)
+    @document.css(".introText > *").each do |node|
+      if node.node_name == "p"
+        parse_article(node)
+      elsif node.node_name == "h3"
+        change_year(node)
+      end
     end
   end
 
   def parse_article(article)
-      if link = article.at_xpath("a")
-        @articles << {
-          title: fetch_title(article),
-          date: fetch_date(article),
-          path: fetch_path(article),
-          content: fetch_content(article)
-        }
-      else
-        change_year(article)
-      end
+    if link = article.at_xpath("a")
+      @articles << {
+        title: fetch_title(article),
+        date: fetch_date(article),
+        path: fetch_path(article),
+        content: fetch_content(article)
+      }
+    end
   end
 
   def fetch_title(article)
@@ -63,10 +65,12 @@ class ImportService
 
   def fetch_content(article)
     if path = fetch_path(article)
-      return unless (path =~ /https?\:\/\//).nil?
       url = build_url(path)
+      return if (url =~ /https?\:\/\/www\.pja\.edu\.pl/).nil?
       if article_document = load_document(url) rescue nil
-        article_document.at_css(".news_content_text .fullText").text
+        if text_node = article_document.at_css(".news_content_text .fullText")
+          text_node.text.gsub(/\s+/, " ")
+        end
       end
     end
   end
